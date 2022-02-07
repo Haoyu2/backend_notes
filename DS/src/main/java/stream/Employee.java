@@ -1,3 +1,5 @@
+package stream;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +30,7 @@ public class Employee implements Comparable<Employee> {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "stream.Employee{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
