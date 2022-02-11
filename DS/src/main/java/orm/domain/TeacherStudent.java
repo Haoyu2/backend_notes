@@ -1,10 +1,10 @@
 package orm.domain;
 
 import lombok.*;
+import restapi_demo.domain.Teacher;
 
 import javax.persistence.*;
 
-@Table(name = "teacher_student")
 @Entity
 
 @Data
@@ -23,7 +23,12 @@ public class TeacherStudent {
     @JoinColumn(name = "s_id")
     private Student stu;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "t_id")
-    private Teacher teacher;
+//    private Teacher teacher;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "t_id")
+//    private Teacher teacher;
+
+
+
 }

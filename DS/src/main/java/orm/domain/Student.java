@@ -26,11 +26,11 @@ public class Student {
     private int id;
 
 
-    @OneToMany(mappedBy = "stu", fetch = FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<TeacherStudent> teacherStudents = new ArrayList<>();
-
-
-    public void addTeachStudent(TeacherStudent ts){teacherStudents.add(ts);}
+//    @OneToMany(mappedBy = "stu", fetch = FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval = false)
+//    private List<TeacherStudent> teacherStudents = new ArrayList<>();
+//
+//
+//    public void addTeachStudent(TeacherStudent ts){teacherStudents.add(ts);}
 
 
 
