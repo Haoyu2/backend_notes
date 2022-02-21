@@ -20,7 +20,13 @@ public class SongCacheImpl implements SongCache {
 
     @Override
     public void recordSongPlays(String songId, int numPlays) {
-        songs.putIfAbsent(songId, new AtomicInteger(0));
+        if (!songs.containsKey(songId)){
+            synchronized (this){
+                if (!songs.containsKey(songId)){
+                    songs.put(songId, new AtomicInteger(0));
+                }
+            }
+        }
         songs.get(songId).getAndAdd(numPlays);
     }
 
