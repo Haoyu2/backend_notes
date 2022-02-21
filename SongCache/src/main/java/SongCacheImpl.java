@@ -1,10 +1,22 @@
+import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class SongCacheImpl implements SongCache {
-    ConcurrentHashMap<String, AtomicInteger> songs = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, AtomicInteger> songs = new ConcurrentHashMap<>();
+    private List<String> songs_ordered;
+    ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
+
+    public SongCacheImpl() {
+        timer.scheduleAtFixedRate(() -> sortSongs(),
+                500L, 2000L, TimeUnit.MILLISECONDS);
+    }
 
     @Override
     public void recordSongPlays(String songId, int numPlays) {
@@ -17,13 +29,16 @@ public class SongCacheImpl implements SongCache {
         return songs.get(songId).intValue();
     }
 
+    public void sortSongs() {
+        songs_ordered = songs.entrySet().parallelStream()
+                .sorted((x, y) -> y.getValue().intValue() - x.getValue().intValue())
+                .map((x) -> x.getKey())
+                .collect(Collectors.toList());
+    }
+
     @Override
     public List<String> getTopNSongsPlayed(int n) {
-        return songs.entrySet().stream()
-                .sorted((x, y)->x.getValue().intValue() - x.getValue().intValue())
-                .map((x)->x.getKey())
-                .collect(Collectors.toList())
-                .subList(0, n);
+        return songs_ordered == null ? Arrays.asList("") : songs_ordered.subList(0, n);
     }
 
     @Override
