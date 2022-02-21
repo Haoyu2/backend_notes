@@ -1,6 +1,8 @@
+import com.google.common.collect.Comparators;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Callable;
@@ -22,9 +24,25 @@ public class SongCacheTest {
         cache.recordSongPlays("ID-3", 5);
     }
 
+    @Test
+    public void sortSongsTest(){
+        SongCacheImpl songs = new SongCacheImpl();
+        IntStream.range(1, 11).parallel()
+                .forEach((i) ->songs.recordSongPlays("ID-" + i, i*10));
+        List<String> names = IntStream.range(1, 11).parallel()
+                .mapToObj((i) ->"ID-" + i)
+                .collect(Collectors.toList());
+
+        List<String> result_sort = names.stream()
+                .sorted((x, y) -> songs.getPlaysForSong(y) - songs.getPlaysForSong(x))
+                .collect(Collectors.toList());
+        songs.sortSongs();
+        assertTrue(Comparators.isInOrder(result_sort, (x, y) ->songs.getPlaysForSong(y) - songs.getPlaysForSong(x)));
+    }
+
 
     @Test
-    public void test() throws InterruptedException {
+    public void recordSongPlaysTest() throws InterruptedException {
         SongCache songs = new SongCacheImpl();
 
 
@@ -48,7 +66,7 @@ public class SongCacheTest {
 
 
     @Test
-    public void test1() {
+    public void recordSongPlaysTest1() throws InterruptedException {
         SongCache songs = new SongCacheImpl();
 
         List<CompletableFuture> fs = new ArrayList<>();

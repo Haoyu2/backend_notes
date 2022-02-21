@@ -15,7 +15,7 @@ public class SongCacheImpl implements SongCache {
 
     public SongCacheImpl() {
         timer.scheduleAtFixedRate(() -> sortSongs(),
-                500L, 2000L, TimeUnit.MILLISECONDS);
+                0L, 2000L, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -38,7 +38,8 @@ public class SongCacheImpl implements SongCache {
 
     @Override
     public List<String> getTopNSongsPlayed(int n) {
-        return songs_ordered == null ? Arrays.asList("") : songs_ordered.subList(0, n);
+        if (songs_ordered == null) sortSongs();
+        return songs_ordered.subList(0, n);
     }
 
     @Override
