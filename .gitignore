@@ -25,4 +25,7 @@ hs_err_pid*
 DS/.idea/
 DS/target/
 DS/DS.iml
+weather/**.iml
+weather/**/**.iml
 
+.gitignore

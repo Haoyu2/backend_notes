@@ -1,0 +1,25 @@
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: search-service
+            uri: lb://search-service # lb means get uri from loadbalance
+            predicates:
+              - Path=/search/**
+        - id: details-service
+            uri: lb://details-service # lb means get uri from loadbalance
+            predicates:
+              - Path=/details/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 10
+server:
+  port: 8200
+

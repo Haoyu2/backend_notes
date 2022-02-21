@@ -1,5 +1,6 @@
 package restapi_demo.domain;
 
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import orm.domain.TeacherStudent;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Builder
 
 @Entity
+
 public class Student {
     @Id
     @GeneratedValue

@@ -1,0 +1,21 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: search-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+feign:
+  client:
+    config:
+      default: # Globe Config
+        loggerLevel: BASIC
+  httpclient: # (implementations (URLConnection default), HttpClient and OKHttp; the last two supports connection pool)
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 50

@@ -1,5 +1,8 @@
 package restapi_demo.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,9 @@ import java.util.List;
 @RequestMapping(path = "students",
         produces = "application/json")
 @CrossOrigin(origins = "*")
+@Slf4j
+
+@Api(value = "Student Controller")
 public class StudentController {
     private StudentService service;
     private TeacherStudentService teacherStudentService;
@@ -41,6 +47,7 @@ public class StudentController {
     }
 
     @GetMapping("/all")
+    @ApiOperation(value = "Get students")
     public ResponseEntity<List<StudentResponseDTO>> getAllStudents() {
         return new ResponseEntity(
                 service.findAll(), HttpStatus.OK
