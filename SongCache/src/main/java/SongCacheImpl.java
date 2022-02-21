@@ -21,7 +21,7 @@ public class SongCacheImpl implements SongCache {
     @Override
     public void recordSongPlays(String songId, int numPlays) {
         if (!songs.containsKey(songId)){
-            synchronized (this){
+            synchronized (songId){
                 if (!songs.containsKey(songId)){
                     songs.put(songId, new AtomicInteger(0));
                 }
