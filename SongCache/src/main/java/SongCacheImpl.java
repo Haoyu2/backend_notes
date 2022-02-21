@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class SongCacheImpl implements SongCache {
-    private ConcurrentHashMap<String, AtomicInteger> songs = new ConcurrentHashMap<>();
-    private List<String> songs_ordered;
+    private volatile ConcurrentHashMap<String, AtomicInteger> songs = new ConcurrentHashMap<>();
+    private volatile List<String> songs_ordered;
     ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
 
     public SongCacheImpl() {
